@@ -1,0 +1,23 @@
+@import "../../styles/colors";
+
+.modal {
+  width: 526px;
+  z-index: 500;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  background-color: $color-bg;
+  text-align: center;
+  transition: all 0.3s ease-out;
+  position: absolute;
+  left: 50%;
+  top: 50vh;
+  transform: translate(-50%, -50%);
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin: 60px;
+    h2 {
+      color: $color-gray-1;
+    }
+  }
+}

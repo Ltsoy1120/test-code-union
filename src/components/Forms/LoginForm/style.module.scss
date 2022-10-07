@@ -1,0 +1,32 @@
+@import "../../../styles/colors";
+
+.register {
+  display: flex;
+  flex-direction: column;
+  h2 {
+    margin-bottom: 17px;
+    font-weight: 600;
+  }
+  .register__form {
+    display: flex;
+    flex-direction: column;
+    input {
+      width: 100%;
+      border: 1px solid $color-gray-3;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 8px;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 20px;
+      color: $color-gray-2;
+    }
+  }
+  span {
+    margin-top: 20px;
+  }
+  a {
+    margin-top: 40px;
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,32 @@
+@import "../../styles/colors";
+
+.button {
+  background: $color-blue;
+  color: $color-white;
+  cursor: pointer;
+  outline: none;
+  font-weight: 450;
+  line-height: 20px;
+  letter-spacing: 0.02em;
+  border: none;
+}
+
+.big {
+  border-radius: 15px;
+  font-size: 20px;
+  &:hover {
+    background-color: #fff;
+    color: $color-blue;
+    border: 2px solid $color-blue;
+  }
+}
+
+.small {
+  border-radius: 10px;
+  font-size: 18px;
+  &:hover {
+    background-color: #fff;
+    color: $color-blue;
+    border: 1px solid $color-blue;
+  }
+}

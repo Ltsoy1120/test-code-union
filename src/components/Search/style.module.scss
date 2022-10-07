@@ -1,0 +1,42 @@
+@import "../../styles/colors";
+
+.search {
+  position: relative;
+  padding-top: 74px;
+  background: $color-blue;
+  h1 {
+    color: white;
+    text-align: left;
+    width: 775px;
+    margin-bottom: 29px;
+  }
+  .search__field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: $color-white;
+    border-radius: 25px;
+    padding: 30px;
+    .search__input {
+      border: 1px solid $color-gray-3;
+      border-radius: 15px;
+      padding: 18px;
+      width: 410px;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      input,
+      button {
+        outline: none;
+        border: none;
+        background: $color-white;
+        font-size: 20px;
+        color: $color-gray-1;
+      }
+    }
+  }
+}
+.container {
+  padding: 48px 100px 82px 100px;
+}

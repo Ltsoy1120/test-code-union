@@ -1,0 +1,43 @@
+@import "../../../styles/colors";
+
+.register {
+  h2 {
+    margin-bottom: 17px;
+    font-weight: 600;
+  }
+  .register__form {
+    display: flex;
+    flex-direction: column;
+    input {
+      width: 100%;
+      border: 1px solid $color-gray-3;
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 8px;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 20px;
+      color: $color-gray-2;
+      outline: none;
+    }
+    .register__checkbox {
+      display: flex;
+      margin-bottom: 36px;
+      margin-top: 100px;
+      input {
+        width: 20px;
+        height: 20px;
+        background: #5a57ff;
+        border-radius: 5px;
+      }
+      a {
+        text-align: left;
+        margin-left: 20px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 18px;
+        text-decoration: underline;
+      }
+    }
+  }
+}
