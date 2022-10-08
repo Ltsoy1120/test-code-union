@@ -1,11 +1,18 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { Link } from "react-router-dom"
+import { toJS } from "mobx"
+import { Context } from "../.."
 import Button from "../Button"
 import LoginForm from "../Forms/LoginForm"
 import RegisterForm from "../Forms/RegisterForm"
 import Modal from "../Modal"
 import styles from "./style.module.scss"
+import { observer } from "mobx-react-lite"
 
 const Auth = () => {
+  const { authUser } = useContext(Context)
+  const user = toJS(authUser.user)
+
   // для модалки
   const [showModal, setShowModal] = useState({ register: false, login: false })
   const openModal = (
@@ -26,18 +33,31 @@ const Auth = () => {
 
   return (
     <div className={styles.auth}>
-      <span onClick={openModal}>Регистрация</span>
-      <Button width={90} height={36} onClick={openModal}>
-        Войти
-      </Button>
+      {authUser.isAuth && user ? (
+        <Link to="/profile">{user.nickname}</Link>
+      ) : (
+        <div className={styles.auth__wrap}>
+          <span onClick={openModal}>Регистрация</span>
+          <Button width={90} height={36} onClick={openModal}>
+            Войти
+          </Button>
+        </div>
+      )}
+
       {showModal.register && (
-        <Modal body={<RegisterForm />} close={closeModal} />
+        <Modal
+          body={<RegisterForm closeModal={closeModal} />}
+          close={closeModal}
+        />
       )}
       {showModal.login && (
-        <Modal body={<LoginForm openModal={openModal} />} close={closeModal} />
+        <Modal
+          body={<LoginForm openModal={openModal} closeModal={closeModal} />}
+          close={closeModal}
+        />
       )}
     </div>
   )
 }
 
-export default Auth
+export default observer(Auth)

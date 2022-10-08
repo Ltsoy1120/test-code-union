@@ -1,13 +1,20 @@
-import axios from "axios"
 import { Formik, Form, FormikProps, Field, ErrorMessage } from "formik"
+import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { Context } from "../../.."
 import { RegisterData } from "../../../models/IUser"
 // import { Link } from "react-router-dom"
 // import * as Yup from "yup"
-import authService from "../../../services/AuthService"
 import Button from "../../Button"
 import styles from "./style.module.scss"
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  closeModal: () => void
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ closeModal }) => {
+  const { authUser } = useContext(Context)
+  const navigate = useNavigate()
   const initialValues = {
     email: "",
     nickname: "",
@@ -16,11 +23,11 @@ const RegisterForm = () => {
     // terms: false
     // confirmPassword: ""
   }
-  const onSubmit = async (values: RegisterData) => {
-    console.log("onSubmit", values)
-    // const response = await axios.post("/auth/registration/customer/new", values)
-    const response = await authService.register(values)
-    console.log("response", response)
+  const onSubmit = (userData: RegisterData) => {
+    console.log("onSubmit", userData)
+    authUser.register(userData)
+    closeModal()
+    navigate("/")
   }
   //   const validate = (values: Values) => {
   //     let errors = {}

@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import { LoginData, RegisterData } from "../models/IUser"
+import { IUser, LoginData, RegisterData } from "../models/IUser"
 import { AuthResponse } from "../models/responses/AuthResponse"
 import http from "./http.service"
 
@@ -14,22 +14,12 @@ const authService = {
   },
   login: async (userData: LoginData): Promise<AxiosResponse<AuthResponse>> => {
     return await http.post<AuthResponse>("/auth/login", userData)
+  },
+  myProfile: async (): Promise<AxiosResponse<IUser>> => {
+    return await http.get<IUser>("auth/login/profile")
   }
   //   logout: async (): Promise<void> => {
-  //     // const { refreshToken } = parseCookies();
-  //     // console.log("refreshToken", refreshToken);
-  //     // return await http.get("/logout");
-  //     return await http.get("/logout", {
-  //       withCredentials: true,
-  //       // headers: {
-  //       //   Cookie: refreshToken
-  //       // }
-  //     })
-  //   },
-  //   refresh: async () => {
-  //     return await axios.get<AuthResponse>(`${API_URL}/refresh`, {
-  //       withCredentials: true,
-  //     })
+  //     return await http.get("/logout")
   //   },
 }
 export default authService

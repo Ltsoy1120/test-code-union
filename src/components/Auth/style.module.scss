@@ -1,5 +1,16 @@
+@import "../../styles/colors";
+
 .auth {
+  .auth__wrap {
+    display: flex;
+    align-items: center;
+  }
+  a,
   span {
     margin-right: 14px;
+  }
+  a {
+    color: $color-blue;
+    font-weight: bold;
   }
 }

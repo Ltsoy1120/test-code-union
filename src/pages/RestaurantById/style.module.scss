@@ -1,0 +1,30 @@
+@import "../../styles/colors";
+
+.restaurant {
+  margin: 100px;
+  color: $color-gray-1;
+  .restaurant__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  .restaurant__image {
+    width: 50vw;
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+  .restaurant__info {
+    text-align: left;
+    margin-left: 5em;
+    span {
+      font-size: 24px;
+      font-weight: 600;
+    }
+    p {
+      font-size: 20px;
+    }
+  }
+}
