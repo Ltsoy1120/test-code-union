@@ -11,9 +11,9 @@ const RestaurantById = () => {
       <div className={styles.restaurant__wrap}>
         <div className={styles.restaurant__image}>
           {images[0] ? (
-            <img src={images[0].url} alt="photo" />
+            <img src={images[0].url} alt="restaurant" />
           ) : (
-            <img src="/static/restaurant.jpg" alt="photo" />
+            <img src="/static/restaurant.jpg" alt="restaurant" />
           )}
         </div>
         <div className={styles.restaurant__info}>

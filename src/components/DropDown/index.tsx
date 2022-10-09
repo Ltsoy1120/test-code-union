@@ -30,6 +30,7 @@ function DropDown<V = string | undefined>(props: DropDownProps<V>) {
     ? options.findIndex(option => option.value === props.default)
     : -1
   const [choice, Choose] = useState<number>(initChoice)
+
   useEffect(() => {
     if (!props.expanded) return
     if (parentRef.current == null) return
@@ -45,6 +46,7 @@ function DropDown<V = string | undefined>(props: DropDownProps<V>) {
       offsetTop - parentElementRect.height / 2 + choiceElementRect.height / 2
     parentElement.scrollBy(0, middle)
   }, [props.expanded, choice])
+
   return (
     <div
       className={classWithModifiers(
@@ -61,10 +63,10 @@ function DropDown<V = string | undefined>(props: DropDownProps<V>) {
             "drop-down__option",
             choice === index && "selected"
           )}
-          onClick={() => (
-            Choose(index),
+          onClick={() => {
+            Choose(index)
             props.onChange(option.value as unknown as V, option.children)
-          )}
+          }}
           disabled={!props.expanded}
           key={index}
         >
