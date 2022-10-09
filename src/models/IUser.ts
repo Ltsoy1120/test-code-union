@@ -10,8 +10,6 @@ export interface RegisterData {
   nickname: string
   phone: string
   password: string
-  //   terms: boolean
-  //   confirmPassword: string
 }
 
 export interface LoginData {

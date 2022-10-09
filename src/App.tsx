@@ -4,10 +4,10 @@ import { Routes, Route } from "react-router-dom"
 import { Context } from "."
 import Layout from "./components/Layout"
 import Main from "./pages/Main"
-import "./App.css"
-import "./styles/global.scss"
 import RestaurantById from "./pages/RestaurantById"
 import MyProfile from "./pages/MyProfile"
+import "./App.css"
+import "./styles/global.scss"
 
 function App() {
   const { authUser } = useContext(Context)

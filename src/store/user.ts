@@ -1,10 +1,12 @@
-import { makeAutoObservable, runInAction } from "mobx"
+import { makeAutoObservable } from "mobx"
 import { IUser, LoginData, RegisterData } from "../models/IUser"
 import authService from "../services/auth.service"
 
 export default class User {
   user = {} as IUser
   isAuth = false
+  error = ""
+  isLoading = false
 
   constructor() {
     makeAutoObservable(this)
@@ -18,27 +20,35 @@ export default class User {
     this.user = user
   }
 
-  async register(userData: RegisterData) {
+  *register(userData: RegisterData) {
     try {
-      const { data } = await authService.register(userData)
+      this.isLoading = true
+      const { data } = yield authService.register(userData)
       localStorage.setItem("token", data.tokens.accessToken)
-      runInAction(() => {
-        this.user = data.user
-      })
+      this.user = data.user
       this.isAuth = true
     } catch (error) {
       console.log(error)
+    } finally {
+      this.isLoading = false
     }
   }
 
-  async login(userData: LoginData) {
+  *login(userData: LoginData) {
     try {
-      const { data } = await authService.login(userData)
+      this.isLoading = true
+      const { data } = yield authService.login(userData)
       localStorage.setItem("token", data.tokens.accessToken)
       this.isAuth = true
       this.user = data.user
+      this.error = ""
     } catch (error) {
-      console.log(error)
+      if (error instanceof Error) {
+        console.log("login-error", error.message)
+        this.error = error.message
+      }
+    } finally {
+      this.isLoading = false
     }
   }
 

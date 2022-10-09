@@ -10,7 +10,7 @@ interface ButtonProps {
   height?: number
   disabled?: boolean
   onClick?: (
-    event: React.FormEvent<HTMLButtonElement> | React.MouseEvent<HTMLElement>
+    e: React.FormEvent<HTMLButtonElement> | React.MouseEvent<HTMLElement>
   ) => void
   children: React.ReactNode
 }

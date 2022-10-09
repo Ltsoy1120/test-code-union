@@ -18,8 +18,5 @@ const authService = {
   myProfile: async (): Promise<AxiosResponse<IUser>> => {
     return await http.get<IUser>("auth/login/profile")
   }
-  //   logout: async (): Promise<void> => {
-  //     return await http.get("/logout")
-  //   },
 }
 export default authService

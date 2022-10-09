@@ -1,4 +1,3 @@
-import { toJS } from "mobx"
 import { observer } from "mobx-react-lite"
 import { useContext, useEffect, useState } from "react"
 import { Context } from "../.."
@@ -8,10 +7,11 @@ import { IRestaurant } from "../../models/IRestaurant"
 import restaurantService from "../../services/restaurant.service"
 import styles from "./style.module.scss"
 
-const Main = observer(() => {
+const Main = () => {
   const { authUser } = useContext(Context)
-
   const [restaurants, setRestaurants] = useState<IRestaurant[]>()
+  const [filteredRestaurants, setFilterRestaurants] = useState<IRestaurant[]>()
+  const [search, setSearch] = useState("")
 
   useEffect(() => {
     async function getRestaurants() {
@@ -19,22 +19,46 @@ const Main = observer(() => {
       setRestaurants(data.restaurants)
     }
     getRestaurants()
-  }, [])
+  }, [authUser.isAuth])
+
+  useEffect(() => {
+    let filterdRest
+    if (search) {
+      filterdRest = restaurants?.filter(rest =>
+        rest.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      )
+    } else {
+      filterdRest = restaurants
+    }
+    setFilterRestaurants(filterdRest ?? [])
+  }, [search, restaurants])
+
+  if (authUser.isLoading) return <h2>Идет загрузка...</h2>
 
   return (
     <div className={styles.main}>
-      {authUser.isAuth ? (
+      {!authUser.isLoading && authUser.isAuth ? (
         <>
-          <Search />
+          <Search
+            restaurants={filteredRestaurants ?? restaurants}
+            onChange={setSearch}
+          />
           <div className={styles.main__previews}>
             <h1>Популярные предложения</h1>
             <h4>Предложения, которые любят наши клиенты</h4>
 
             <div className={styles.main__cards}>
-              {restaurants &&
+              {filteredRestaurants && filteredRestaurants[0] ? (
+                filteredRestaurants.map(rest => (
+                  <Card restaurant={rest} key={rest.id} />
+                ))
+              ) : restaurants ? (
                 restaurants.map(rest => (
                   <Card restaurant={rest} key={rest.id} />
-                ))}
+                ))
+              ) : (
+                <h4>Данных пока нет</h4>
+              )}
             </div>
           </div>
         </>
@@ -43,6 +67,6 @@ const Main = observer(() => {
       )}
     </div>
   )
-})
+}
 
-export default Main
+export default observer(Main)

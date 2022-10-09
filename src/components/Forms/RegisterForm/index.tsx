@@ -1,12 +1,12 @@
-import { Formik, Form, FormikProps, Field, ErrorMessage } from "formik"
+import { Formik, Form, Field } from "formik"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { Context } from "../../.."
 import { RegisterData } from "../../../models/IUser"
-// import { Link } from "react-router-dom"
-// import * as Yup from "yup"
+import * as Yup from "yup"
 import Button from "../../Button"
 import styles from "./style.module.scss"
+import { observer } from "mobx-react-lite"
 
 interface RegisterFormProps {
   closeModal: () => void
@@ -20,8 +20,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ closeModal }) => {
     nickname: "",
     phone: "",
     password: ""
-    // terms: false
-    // confirmPassword: ""
   }
   const onSubmit = (userData: RegisterData) => {
     console.log("onSubmit", userData)
@@ -29,48 +27,45 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ closeModal }) => {
     closeModal()
     navigate("/")
   }
-  //   const validate = (values: Values) => {
-  //     let errors = {}
-  //     return errors
-  //   }
-  //   const validationSchema = Yup.object({
-  //     emal: Yup.string().email("Invalid").required("Req"),
-  //     password: Yup.string().required("Req"),
-  //     confirmPassword: Yup.string().required("Req")
-  //   })
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email("Неверный email").required("Обязательное поле"),
+    nickname: Yup.string().required("Обязательное поле"),
+    phone: Yup.string().required("Обязательное поле"),
+    password: Yup.string()
+      .min(8, "Пароль должен быть не менее 8 символов")
+      .required("Обязательное поле")
+  })
 
   return (
     <Formik
       initialValues={initialValues}
+      validateOnBlur
       onSubmit={onSubmit}
-      //   validationSchema={validationSchema}
+      validationSchema={validationSchema}
     >
-      {(props: FormikProps<RegisterData>) => (
+      {({ errors, touched, isValid, handleSubmit, dirty }) => (
         <div className={styles.register}>
           <h2>Зарегистрироваться</h2>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <div className={styles.register__form}>
               <Field id="email" name="email" placeholder="Email" />
-              <ErrorMessage name="emal" />
+              {touched.email && errors.email && (
+                <p className={styles.error}>{errors.email}</p>
+              )}
               <Field id="nickname" name="nickname" placeholder="Nick Name" />
+              {touched.nickname && errors.nickname && (
+                <p className={styles.error}>{errors.nickname}</p>
+              )}
               <Field id="phone" name="phone" placeholder="Телефон" />
+              {touched.phone && errors.phone && (
+                <p className={styles.error}>{errors.phone}</p>
+              )}
               <Field id="password" name="password" placeholder="Пароль" />
-              <ErrorMessage name="password" />
-              {/* <Field
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Повторите пароль"
-              />
-              <ErrorMessage name="confirmPassword" /> */}
-              {/* <div className={styles.register__checkbox}>
-                <Field id="terms" name="terms" type="checkbox" />
-                <Link to="/">
-                  Я принимаю условия Пользовательского соглашения, политики
-                  конфиденциальности, Обработки и распространения персональных
-                  данных
-                </Link>
-              </div> */}
-              <Button type="submit" height={55}>
+              {touched.password && errors.password && (
+                <p className={styles.error}>{errors.password}</p>
+              )}
+              <Button disabled={!isValid && !dirty} type="submit" height={55}>
                 Далее
               </Button>
             </div>
@@ -81,4 +76,4 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ closeModal }) => {
   )
 }
 
-export default RegisterForm
+export default observer(RegisterForm)
